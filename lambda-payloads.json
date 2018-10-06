@@ -1,0 +1,31 @@
+{
+    "DataScraper": {
+        "lambda": {}
+    },
+    "FindService": {
+        "lambda": {
+            "messageVersion": "1.0",
+            "invocationSource": "FulfillmentCodeHook",
+            "userId": "wch89kjqcpkds8seny7dly5x3otq68j3",
+            "sessionAttributes": {},
+            "bot": {
+                "name": "HelpBot",
+                "alias": null,
+                "version": "$LATEST"
+            },
+            "outputDialogMode": "Text",
+            "currentIntent": {
+                "name": "FindService",
+                "slots": {
+                    "Service": "Healthcare",
+                    "Service_two": null,
+                    "Service_three": null,
+                    "Gender": "female",
+                    "Age": "minor",
+                    "Location": "tx"
+                },
+                "confirmationStatus": "None"
+            }
+        }
+    }
+}
