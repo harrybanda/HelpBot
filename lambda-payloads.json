@@ -17,15 +17,21 @@
             "currentIntent": {
                 "name": "FindService",
                 "slots": {
-                    "Service": "Healthcare",
-                    "Service_two": null,
+                    "Service": "health care",
+                    "Service_two": "therapy",
                     "Service_three": null,
-                    "Gender": "female",
-                    "Age": "minor",
-                    "Location": "tx"
+                    "Gender": "male",
+                    "Age": "adult",
+                    "Location": "fl"
                 },
                 "confirmationStatus": "None"
             }
         }
+    },
+    "HelloWorld": {
+        "lambda": {}
+    },
+    "": {
+        "lambda": {}
     }
 }

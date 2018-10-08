@@ -69,7 +69,8 @@ def delegate(session_attributes, slots):
 # --- Helper Functions ---
     
 def scan_database(service, service_two, service_three, gender, age, location):
-
+    
+    # set age and gender to match value in database
     if (age.lower() == 'adult'):
         age = 'Adult'
     else:
@@ -80,12 +81,27 @@ def scan_database(service, service_two, service_three, gender, age, location):
     else:
         gender = 'Female'
     
+    # set location to match value in database
     if any(state['abbreviation'] == location.lower() for state in state_data):
         location = location.upper()
     elif any(state['name'] == location.lower() for state in state_data):
         match = next(d for d in state_data if d['name'] == location.lower())
         location = match['abbreviation'].upper()
     
+    # set services to match value in database    
+    if any(s['id'] == service for s in service_data):
+        match = next(d for d in service_data if d['id'] == service)
+        service = match['name'].lower()
+        
+    if any(s['id'] == service_two for s in service_data):
+        match = next(d for d in service_data if d['id'] == service_two)
+        service_two = match['name'].lower()
+        
+    if any(s['id'] == service_three for s in service_data):
+        match = next(d for d in service_data if d['id'] == service_three)
+        service_three = match['name'].lower()
+    
+    # scan database    
     if service_two is None and service_three is None:
         response = table.scan(
         FilterExpression = Attr('populationsDetail').contains('Sex Trafficking') &
@@ -131,8 +147,12 @@ def add_card_details(service, service_two, service_three, gender, age, location)
                 contact = 'Hotline: ' + hotline
             elif hotline is None and phone is not None:
                 contact = 'Phone: ' + phone
+            elif hotline is None and phone is None and email is not None:
+                contact = 'Email: ' + email
             else:
-                contact = None
+                contact = "No contact info"
+            
+            name = (name[:70] + '...') if len(name) > 70 else name
 
             details.append({
                 'title': name, 
@@ -189,13 +209,13 @@ def validate_find_service(gender, age, location, service, service_two, service_t
     if location is not None and not any((d['name'] == location.lower()) or (d['abbreviation'] == location.lower()) for d in state_data):
         return build_validation_result(False,'Location', 'Sorry I could not recognise {}, please enter the U.S state you are located in (e.g. California or CA)'.format(location))
              
-    if service is not None and not any(s['name'] == service.lower() for s in service_data):
+    if service is not None and not any((s['name'] == service.lower()) or (s['id'] == service) for s in service_data):
         return build_validation_result(False,'Service',"Sorry I could not understand {}, enter 'Help' to see a list of services I can find.".format(service))         
         
-    if service_two is not None and not any(s['name'] == service_two.lower() for s in service_data):
+    if service_two is not None and not any((s['name'] == service_two.lower()) or (s['id'] == service_two) for s in service_data):
         return build_validation_result(False,'Service_two',"Sorry I could not understand {}, enter 'Help' to see a list of services I can find.".format(service_two))
                                        
-    if service_three is not None and not any(s['name'] == service_three.lower() for s in service_data):
+    if service_three is not None and not any((s['name'] == service_three.lower()) or (s['id'] == service_three) for s in service_data):
         return build_validation_result(False,'Service_three',"Sorry I could not understand {}, enter 'Help' to see a list of services I can find.".format(service_three))
      
     return build_validation_result(True, None, None)
@@ -203,20 +223,8 @@ def validate_find_service(gender, age, location, service, service_two, service_t
 def format_services(s):
     s = s.lower()
     
-    if (s == 'education/job training' or s == 'education' or s == 'job training'):
+    if (s == 'education/job training'):
         s = 'Education/Job Training'
-    elif (s == 'long-term housing' or s == 'long term housing'):
-        s = 'Long-term Housing'
-    elif (s == 'healthcare' or s == 'health care'):
-        s = 'Health Care'
-    elif (s == 'shelter' or s == 'emergency shelter'):
-        s = 'Emergency Shelter'
-    elif (s == 'mental health treatment' or s == 'mental health' or s == 'mental treatment' or s == 'mental'):
-        s = 'Mental Health Treatment'
-    elif (s == 'addiction treatment' or s == 'addiction'):
-        s = 'Addiction Treatment'
-    elif (s == 'supportive counseling' or s == 'counseling'):
-        s = 'Supportive Counseling'
     else:
         s = string.capwords(s)
     return s

@@ -18,8 +18,7 @@ def strip_url(url):
     url = url.replace("www://","")
     url = url.replace("http//:","")
     url = url.replace(",",".")
-    domain = url.split('/')[0]
-    return domain
+    return url
     
 ## Set item to null if not present
 def check_none(item, key, feature):
@@ -51,20 +50,22 @@ def organize_data():
                 check_none(item, 'email', feature)
                 check_none(item, 'state', feature)
                 check_none(item, 'city', feature)
-
+                
                 data.append(item)
-            
+                    
 ## Store in DynamoDB 
 def ddbWriter(data):
     with table.batch_writer() as batch:
         item_counter = 0
         while item_counter < len(data):
             item = data[item_counter]
+            
             print (json.dumps(item, indent=4, sort_keys=True))
+       
             batch.put_item(
                 Item = item
             )
-            
+         
             item_counter += 1
             
 ## Lambda handler    

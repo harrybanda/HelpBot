@@ -1,59 +1,38 @@
 [
     {
-        "name": "supportive counseling"
+        "name": "therapy",
+        "id": "1"
     },
     {
-        "name": "counseling"
+        "name": "health care",
+        "id": "2"
     },
     {
-        "name": "long term housing"
+        "name": "mental health care",
+        "id": "3"
     },
     {
-        "name": "addiction treatment"
+        "name": "addiction treatment",
+        "id": "4"
     },
     {
-        "name": "addiction"
+        "name": "supportive counseling",
+        "id": "5"
     },
     {
-        "name": "education"
+        "name": "education/job training",
+        "id": "6"
     },
     {
-        "name": "emergency shelter"
+        "name": "emergency shelter",
+        "id": "7"
     },
     {
-        "name": "shelter"
+        "name": "long-term housing",
+        "id": "8"
     },
     {
-        "name": "education/job training"
-    },
-    {
-        "name": "therapy"
-    },
-    {
-        "name": "mental health treatment"
-    },
-    {
-        "name": "mental health"
-    },
-    {
-        "name": "mental treatment"
-    },
-    {
-        "name": "mental"
-    },
-    {
-        "name": "transitional housing"
-    },
-    {
-        "name": "job training"
-    },
-    {
-        "name": "health care"
-    },
-    {
-        "name": "long-term housing"
-    },
-    {
-        "name": "healthcare"
+        "name": "transitional housing",
+        "id": "9"
     }
 ]
